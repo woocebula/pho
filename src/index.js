@@ -69,18 +69,24 @@ const Position = ({positions}) => {
   ); 
 };
 
-const List = ({positions, rolls, pho, curry, setRolls, setPho, setCurry, total}) => {
-  // const [rolls, setRolls] = useState(0)
-  // const [pho, setPho] = useState(0)
-  // const [curry, setCurry] = useState(0)
+const List = ({positions, rolls, pho, curry, setRolls, setPho, setCurry, totalQuanti}) => {
+  if (totalQuanti === 0) {
   return (
     <ul>
         <Position positions={positions[0]}/><Button handleClick={() => setRolls(rolls + 1)}/>
         <Position positions={positions[1]}/><Button handleClick={() => setPho(pho + 1)}/>
         <Position positions={positions[2]}/><Button handleClick={() => setCurry(curry + 1)}/>
     </ul>
-    
   );
+  } else {
+    return (
+      <ul>
+        <Position positions={positions[0]}/><Button handleClick={() => setRolls(rolls + 1)}/><Button1 handleClick={() => setRolls(rolls - 1)}/>
+        <Position positions={positions[1]}/><Button handleClick={() => setPho(pho + 1)}/><Button1 handleClick={() => setPho(pho - 1)}/>
+        <Position positions={positions[2]}/><Button handleClick={() => setCurry(curry + 1)}/><Button1 handleClick={() => setCurry(curry - 1)}/>
+    </ul>
+    );
+  }
 }
   
 
@@ -88,6 +94,7 @@ const App = () => {
   const [rolls, setRolls] = useState(0)
   const [pho, setPho] = useState(0)
   const [curry, setCurry] = useState(0)
+  const totalQuanti = rolls + pho + curry
 const menu = {
     name: 'Place your phorder',
     positions: [
@@ -108,9 +115,9 @@ const menu = {
   return ( [
     <div>
       <Header menu={menu.name}/>
-      </div>,
+    </div>,
     <div>
-      <List positions={menu.positions} rolls={rolls} pho={pho} curry={curry} setRolls={setRolls} setPho={setPho} setCurry={setCurry}/>
+      <List positions={menu.positions} rolls={rolls} pho={pho} curry={curry} setRolls={setRolls} setPho={setPho} setCurry={setCurry} totalQuanti={totalQuanti}/>
       
     </div>,
     <div>
