@@ -1,5 +1,7 @@
 import React, {useState} from 'react';
 import ReactDOM from 'react-dom';
+import dude from './dude.jpg;';
+
 
 const Button = ({price, handleClick}) => <button onClick={handleClick}>
   Add</button>;
@@ -12,7 +14,6 @@ const Phorder = ({text, price, number}) => {
     <tr>
       <td>{text}</td>
       <td>{number}</td>
-      {/* <td>{price}Euro</td> */}
       <td>{number * price}Euro</td>
     </tr>
     
@@ -42,8 +43,7 @@ return (
             <tr>
               <td>Total</td>
               <td>{totalQuanti}</td>
-              <td>
-              {total}Euro
+              <td>{total}Euro
               </td>
             </tr>
           </tbody>
@@ -63,31 +63,56 @@ const Header = ({menu}) => {
 const Position = ({positions}) => {
   return (
     <li>
-     {positions.dish}
+     {positions.dish} {positions.price}
     </li>
       
   ); 
 };
 
 const List = ({positions, rolls, pho, curry, setRolls, setPho, setCurry, totalQuanti}) => {
-  if (totalQuanti === 0) {
   return (
     <ul>
         <Position positions={positions[0]}/><Button handleClick={() => setRolls(rolls + 1)}/>
+        {rolls > 0 
+          ? <Button1 handleClick={() => setRolls(rolls - 1)}/>
+          : <span></span>
+
+        }
+
         <Position positions={positions[1]}/><Button handleClick={() => setPho(pho + 1)}/>
+        {pho > 0 && <Button1 handleClick={() => setPho(pho - 1)}/>}
+
         <Position positions={positions[2]}/><Button handleClick={() => setCurry(curry + 1)}/>
+        {curry > 0 && <Button1 handleClick={() => setCurry(curry - 1)}/>}
+
     </ul>
   );
+};
+
+const Meme = ({totalQuanti, Summary}) => {
+  
+  if (totalQuanti <= 3) {
+  return(
+    <div>
+      <h1>Not Hungry?</h1>
+      <img src= {dude} alt ='dude' />
+    </div>
+    
+    
+  );
   } else {
-    return (
-      <ul>
-        <Position positions={positions[0]}/><Button handleClick={() => setRolls(rolls + 1)}/><Button1 handleClick={() => setRolls(rolls - 1)}/>
-        <Position positions={positions[1]}/><Button handleClick={() => setPho(pho + 1)}/><Button1 handleClick={() => setPho(pho - 1)}/>
-        <Position positions={positions[2]}/><Button handleClick={() => setCurry(curry + 1)}/><Button1 handleClick={() => setCurry(curry - 1)}/>
-    </ul>
-    );
-  }
-}
+  return (
+    <div>
+      <h1>DAMN</h1>
+      <img 
+      src = ''
+      alt = 'd' />
+    </div>
+  )
+  }  
+   
+
+};
   
 
 const App = () => {
@@ -122,7 +147,11 @@ const menu = {
     </div>,
     <div>
       <Summary positions={menu.positions} rolls={rolls} pho={pho} curry={curry}/>
-    </div>]
+    </div>,
+    <div>
+      <Meme totalQuanti={totalQuanti}/>
+    </div> 
+  ]
   );
 };
 ReactDOM.render(<App />, document.getElementById('root')); 
